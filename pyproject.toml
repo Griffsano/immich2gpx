@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "immich2gpx"
-version = "0.0.0"
+version = "1.0.0"
 description = "Command-line tool that queries filtered media metadata from an Immich server and exports EXIF location data to GPX files."
 readme = { file = "README.md", content-type = "text/markdown" }
 license = "AGPL-3.0-or-later"
