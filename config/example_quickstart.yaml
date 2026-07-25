@@ -1,0 +1,21 @@
+immich:
+  url: https://your-immich-server.example.com
+  api_key: YOUR_API_KEY
+  timeout: 10
+
+analysis:
+  show_keys:
+    - id
+    - fileCreatedAt
+  group_by_keys:
+
+gpx:
+  directory: gpx
+  description_keys:
+    - id
+
+jobs:
+  recents:
+    filter:
+      or:
+        takenAfter: 2026-01-01T00:00:00
