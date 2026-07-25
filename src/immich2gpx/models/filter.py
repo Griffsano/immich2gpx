@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Iterable, Mapping
-from datetime import datetime
+from datetime import datetime, timezone
 from itertools import product
 from typing import Any
 
@@ -27,12 +27,15 @@ class Filter(BaseModel):
             for key, value in self.conditions.items():
                 if value is None or value == {}:
                     self._formatted_conditions[key] = None
-                elif isinstance(value, bool):
-                    self._formatted_conditions[key] = str(value).lower()
-                elif isinstance(value, (int, float)):
+                elif isinstance(value, (bool, int, float)):
                     self._formatted_conditions[key] = value
                 elif isinstance(value, datetime):
-                    self._formatted_conditions[key] = value.isoformat()
+                    datetime_value = (
+                        value.replace(tzinfo=timezone.utc)
+                        if value.tzinfo is None
+                        else value
+                    )
+                    self._formatted_conditions[key] = datetime_value.isoformat()
                 elif isinstance(value, list):
                     self._formatted_conditions[key] = tuple(value)
                 else:

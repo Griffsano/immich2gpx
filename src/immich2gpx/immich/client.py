@@ -163,8 +163,13 @@ class ImmichClient:
                 except json.JSONDecodeError:
                     logger.error(f"Response content not JSON: {resp.text}")
                 else:
-                    if isinstance(data, dict) and "message" in data:
+                    if (
+                        isinstance(data, dict)
+                        and "message" in data
+                        and "errors" in data
+                    ):
                         logger.error(f"Server error message: {data['message']}")
+                        logger.error(f"Server errors: {data['errors']}")
                     else:
                         logger.error(f"Response JSON: {data}")
             raise

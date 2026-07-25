@@ -172,7 +172,10 @@ def test_ping_invalid_json_type(mock_response, sample_config, caplog):
 
 
 def test_http_error_with_message(mock_response, sample_config, caplog):
-    mock_response.json.return_value = {"message": "bad request"}
+    mock_response.json.return_value = {
+        "message": "bad request",
+        "errors": "description",
+    }
     err = requests.exceptions.HTTPError()
     err.response = mock_response
     mock_response.raise_for_status.side_effect = err

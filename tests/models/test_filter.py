@@ -38,10 +38,11 @@ def test_formatted_conditions_types():
     formatted = filter.formatted_conditions
     assert formatted["none"] is None
     assert formatted["empty"] is None
-    assert formatted["bool"] == "true"
+    assert formatted["bool"] == True  # noqa: E712
     assert formatted["int"] == 1
     assert formatted["float"] == 1.5  # noqa: PLR2004
     assert formatted["date"] == dt.isoformat()
+    assert "+00:00" in formatted["date"]
     assert formatted["list"] == ("a", "b")
     assert formatted["str"] == "hello"
 
