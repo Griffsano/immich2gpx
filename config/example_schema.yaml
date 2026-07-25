@@ -1,0 +1,70 @@
+immich:
+  url: https://your-immich-server.example.com
+  api_key: YOUR_API_KEY
+  timeout: 10
+
+analysis:
+  show_keys:
+    - id
+    - fileCreatedAt
+    - originalFileName
+    - people
+  group_by_keys:
+    - originalPath
+    - model
+    - country
+
+gpx:
+  directory: gpx
+  description_keys:
+    - id
+    - originalFileName
+    - model
+
+jobs:
+  main:
+    merge_jobs: vacation-202?
+    run_jobs:
+      - new_favorite_photos
+      - special_filter_*
+    references:
+      my_camera:
+        model: Canon EOS 123
+    filter:
+      and:
+        - ref: my_camera
+        - originalFileName: jpg
+        - and:
+            - takenAfter: 2026-01-01T00:00:00
+            - or:
+                - createdAfter: 2026-01-31T23:59:59
+                - takenBefore: 2026-01-31T23:59:59
+        - or:
+            - country: Italy
+            - country: Spain
+            - personIds: ["44fe826f-11d1-45f0-bb6e-a22d40fc16eb"]
+            - rating: 5
+
+  vacation-2025:
+  vacation-2019:
+  new_favorite_photos:
+  special_filter_123:
+
+  datatypes:
+    filter:
+      and:
+        model: Canon EOS 123
+        country: "Italy"
+        rating: 5
+        takenBefore: 2026-01-15T08:00:00
+        updatedAfter: 2025-12-01T14:00:00
+        isFavorite: true
+        isArchived: false
+        personIds:
+          - "44fe826f-11d1-45f0-bb6e-a22d40fc16eb"
+        albumIds:
+          [
+            "c844e26a-508a-40fe-8440-e1328c1b10a7",
+            "9a289e44-2b39-493d-8e0a-fd418ad133db",
+          ]
+        city: null

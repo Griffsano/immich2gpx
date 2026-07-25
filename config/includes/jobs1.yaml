@@ -1,0 +1,4 @@
+vacation:
+  filter:
+    or:
+      country: Italy

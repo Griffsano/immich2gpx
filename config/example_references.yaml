@@ -1,0 +1,22 @@
+immich:
+  url: https://your-immich-server.example.com
+  api_key: YOUR_API_KEY
+
+references:
+  my_camera:
+    model: Canon EOS 123
+  high_rating:
+    or:
+      - rating: 4
+      - rating: 5
+
+jobs:
+  main:
+    references:
+      new_photos:
+        takenAfter: 2026-03-15T12:00:00
+    filter:
+      and:
+        - ref: my_camera
+        - ref: high_rating
+        - ref: new_photos

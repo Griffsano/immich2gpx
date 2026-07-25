@@ -1,0 +1,10 @@
+immich:
+  url: https://your-immich-server.example.com
+  api_key: !include includes/apikey.txt
+
+references:
+  - !include includes/shared_references.yaml
+
+jobs:
+  - !include includes/jobs1.yaml
+  - !include includes/jobs2.yaml
