@@ -1,0 +1,125 @@
+[build-system]
+requires = ["setuptools>=69", "wheel>=0.41"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "immich2gpx"
+version = "0.0.0"
+description = "Command-line tool that queries filtered media metadata from an Immich server and exports EXIF location data to GPX files."
+readme = { file = "README.md", content-type = "text/markdown" }
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [{ name = "Griffsano" }]
+keywords = ["immich", "gpx", "exif", "gps", "photos"]
+requires-python = ">=3.10,<4"
+dependencies = [
+    "pydantic>=2.12,<3",
+    "requests>=2.31,<3",
+    "PyYAML>=6.0,<7",
+    "tabulate>=0.10,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Core tooling
+    "pip>=24",
+    "setuptools>=69",
+
+    # Linting & formatting
+    "ruff>=0.15",
+
+    # Static typing
+    "mypy>=1.10",
+    "types-requests>=2.31",
+    "types-PyYAML>=6.0",
+    "types-tabulate>=0.10",
+
+    # Spelling
+    "codespell>=2.2",
+
+    # Testing
+    "pytest>=8.1.1",
+    "pytest-cov>=6.0",
+    "pytest-mock>=3.14",
+]
+
+[project.urls]
+Repository = "https://github.com/Griffsano/immich2gpx"
+Documentation = "https://github.com/Griffsano/immich2gpx/blob/main/README.md"
+Issues = "https://github.com/Griffsano/immich2gpx/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+immich2gpx = "immich2gpx.cli.cli:main"
+
+# ---------------------------
+# Ruff (linting + formatting)
+# ---------------------------
+[tool.ruff]
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # import sorting
+    "B",    # bugbear
+    "C4",   # comprehensions
+    "UP",   # pyupgrade
+    "SIM",  # simplify
+    "PL",   # pylint rules (safe subset)
+    "S",    # bandit security checks
+    "T20",  # disallow print()
+    "RUF",  # ruff-specific
+    "PERF", # performance anti-patterns
+    "DTZ",  # timezone-aware datetime usage
+    "PTH",  # prefer pathlib over os.path
+]
+ignore = [
+    "E203", # whitespace before ':'
+    "E501", # line length (formatter handles)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"] # allow assert in tests
+
+# ---------------------------
+# Mypy (static typing)
+# ---------------------------
+[tool.mypy]
+strict = true
+warn_unused_configs = true
+show_error_codes = true
+pretty = true
+disallow_any_unimported = true
+disallow_any_expr = false
+warn_redundant_casts = true
+warn_no_return = true
+
+# ---------------------------
+# Codespell (spelling)
+# ---------------------------
+[tool.codespell]
+skip = [".venv", ".pytest_cache", ".ruff_cache", "htmlcov"]
+
+# ---------------------------
+# Coverage (pytest-cov)
+# ---------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["immich2gpx"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = true
+precision = 2

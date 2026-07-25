@@ -1,0 +1,2 @@
+# Use pyproject.toml [project.optional-dependencies]/dev
+-e .[dev]
